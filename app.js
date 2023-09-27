@@ -22,20 +22,34 @@ function showResults(results) {
   document.querySelector("#results tbody").innerHTML = "";
   const sortedByTime = results.sort((a, b) => a.time.localeCompare(b.time));
   for (const result of sortedByTime) {
-    result.translateDiscipline();
-    result.translateType();
+    let resultTypeText;
+    let resultDisciplineText;
 
-    // CONVERT TO UPPER CASE
-    // const capitalizedDiscipline = result.discipline.charAt(0).toUpperCase() + result.discipline.slice(1);
-    // const capitalizedType = result.type.charAt(0).toUpperCase() + result.type.slice(1);
+    if (result.isTraining() === true) {
+      resultTypeText = "Træning";
+    } else if (result.isCompetition() === true) {
+      resultTypeText = "Konkurrence";
+    }
+
+    if (result.isBackStroke() === true) {
+      resultDisciplineText = "ryg";
+    } else if (result.isButterfly() === true) {
+      resultDisciplineText = "butterfly";
+    } else if (result.isCrawl() === true) {
+      resultDisciplineText = "crawl";
+    } else if (result.isBreastStroke() === true) {
+      resultDisciplineText = "bryst";
+    } else if (result.isFreeStyle() === true) {
+      resultDisciplineText = "freestyle";
+    }
     const html =
       /*html*/
       `
             <tr>
             <td>${result.date}</td>
             <td>${result.memberId}</td>
-            <td>${result.discipline}</td>
-            <td>${result.type}</td>
+            <td>${resultDisciplineText}</td>
+            <td>${resultTypeText}</td>
             <td>${result.time}</td>
             </tr>
         `;

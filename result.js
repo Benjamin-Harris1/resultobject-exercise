@@ -11,28 +11,29 @@ function createResult(resultData) {
     memberId: resultData.memberId,
     type: resultData.resultType,
     time: resultData.time,
-    translateDiscipline() {
-      if (this.discipline == "backstroke") {
-        this.discipline = "ryg";
-      } else if (this.discipline == "breaststroke") {
-        this.discipline = "bryst";
-      } else if (this.discipline == "crawl") {
-        this.discipline = "crawl";
-      } else if (this.discipline == "freestyle") {
-        this.discipline = "freestyle";
-      } else if (this.discipline == "butterfly") {
-        this.discipline = "butterfly";
-      }
+    isTraining() {
+      return this.type === "training";
     },
-    translateType() {
-      if (this.type == "competition") {
-        this.type = "stævne";
-      } else if (this.type == "training") {
-        this.type = "træning";
-      }
-      console.log(this.type);
+    isCompetition() {
+      return this.type === "competition";
+    },
+    isBackStroke() {
+      return this.discipline === "backstroke";
+    },
+    isButterfly() {
+      return this.discipline === "butterfly";
+    },
+    isCrawl() {
+      return this.discipline === "crawl";
+    },
+    isBreastStroke() {
+      return this.discipline === "breaststroke";
+    },
+    isFreeStyle() {
+      return this.discipline === "freestyle";
     },
   };
+
   return Result;
 }
 

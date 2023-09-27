@@ -11,16 +11,36 @@ function createResult(resultData) {
     memberId: resultData.memberId,
     type: resultData.resultType,
     time: resultData.time,
-    getTimeAsString() {
-      const minutes = Math.floor(this.time / (60 * 1000));
-      const seconds = Math.floor((this.time % (60 * 1000)) / 1000);
-      const milliseconds = this.time % 1000;
-      return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(3, "0")}`;
+    translateDiscipline() {
+      if (this.discipline == "backstroke") {
+        this.discipline = "ryg";
+      } else if (this.discipline == "breaststroke") {
+        this.discipline = "bryst";
+      } else if (this.discipline == "crawl") {
+        this.discipline = "crawl";
+      } else if (this.discipline == "freestyle") {
+        this.discipline = "freestyle";
+      } else if (this.discipline == "butterfly") {
+        this.discipline = "butterfly";
+      }
     },
-    setTimeFromFormattedString: function (formattedTime) {
-      const [minutes, seconds, milliseconds] = formattedTime.split(/[:.]/).map(Number);
-      this.time = minutes * 60000 + seconds * 1000 + milliseconds;
+    translateType() {
+      if (this.type == "competition") {
+        this.type = "stævne";
+      } else if (this.type == "training") {
+        this.type = "træning";
+      }
+      console.log(this.type);
     },
   };
   return Result;
 }
+
+function formatDate(dateString) {
+  const options = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+
+  const date = new Date(dateString);
+  return date.toLocaleDateString("da-DK", options);
+}
+
+export { createResult, formatDate };

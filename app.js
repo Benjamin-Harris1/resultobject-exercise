@@ -11,14 +11,23 @@ async function main() {
 
 async function getResults() {
   const response = await fetch("results.json");
-  const data = response.json();
-  return data;
+  const data = await response.json();
+  return data.map((resultData) => {
+    resultData.date = result.formatDate(resultData.date);
+    return result.createResult(resultData);
+  });
 }
 
 function showResults(results) {
   document.querySelector("#results tbody").innerHTML = "";
   const sortedByTime = results.sort((a, b) => a.time.localeCompare(b.time));
   for (const result of sortedByTime) {
+    result.translateDiscipline();
+    result.translateType();
+
+    // CONVERT TO UPPER CASE
+    // const capitalizedDiscipline = result.discipline.charAt(0).toUpperCase() + result.discipline.slice(1);
+    // const capitalizedType = result.type.charAt(0).toUpperCase() + result.type.slice(1);
     const html =
       /*html*/
       `
@@ -26,7 +35,7 @@ function showResults(results) {
             <td>${result.date}</td>
             <td>${result.memberId}</td>
             <td>${result.discipline}</td>
-            <td>${result.resultType}</td>
+            <td>${result.type}</td>
             <td>${result.time}</td>
             </tr>
         `;
